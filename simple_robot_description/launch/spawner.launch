@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+<!-- carga el archivo URDF en el servidor de parámetros -->
+<param name="robot_description" textfile="$(find simple_robot_description)/urdf/robot.urdf"/>
+
+<!-- carga los controladores -->
+<rosparam file="$(find simple_robot_description)/config/config.yaml" command="load" ns="/simple_model"/>
+
+<!-- inicia el spawner (generador) -->
+<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
+  args="-urdf -model simple_model -param robot_description"/>
+
+<!-- convierte el estado de los joints en transformaciones TF -->
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+  respawn="false" output="screen">
+    <remap from="joint_state" to="/simple_model/joint_states"/>
+    <param name="publish_frequency" type="double" value="5.0"/>
+</node>
+
+<!-- inicia el controlador -->
+<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" 
+  output="screen" ns="/simple_model" args="
+    joint_state_controller 
+    base_to_second_joint_position_controller"/>
+
+</launch>

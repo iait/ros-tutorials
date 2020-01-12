@@ -1,2 +1,5 @@
 /CMakeLists.txt
-/weed_robot_description
+/weed_robot_description/
+/weed_robot/
+/spawn_robot_tools_pkg/
+/test/
