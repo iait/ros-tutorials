@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="simple_example">
+<robot name="simple_model">
 
 <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
@@ -8,6 +8,16 @@
     <legacyModeNS>true</legacyModeNS>
   </plugin>
 </gazebo>
+
+<material name="red">
+  <color rgba="0.8 0 0 1"/>
+</material>
+<material name="green">
+  <color rgba="0 0.8 0 1"/>
+</material>
+<material name="blue">
+  <color rgba="0 0 0.8 1"/>
+</material>
 
 <link name="dummy_link">
 </link>
@@ -26,8 +36,13 @@
     <geometry>
       <cylinder radius="0.05" length="0.24"/>
     </geometry>
+    <material name="red"/>
   </visual>
 </link>
+
+<gazebo reference="base_link">
+  <material>Gazebo/Red</material>
+</gazebo>
 
 <joint name="dummy_base_joint" type="fixed">
   <parent link="dummy_link"/>
@@ -49,8 +64,13 @@
     <geometry>
       <box size="0.05 0.05 0.15"/>
     </geometry>
+    <material name="blue"/>
   </visual>
 </link>
+
+<gazebo reference="second_link">
+  <material>Gazebo/Blue</material>
+</gazebo>
 
 <joint name="base_to_second_joint" type="continuous">
   <parent link="base_link"/>
