@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+<!-- inicia Gazebo con un world vacío -->
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+  <arg name="world_name" value="$(find test_gazebo)/worlds/default.world"/>
+  <arg name="debug" value="false" />
+  <arg name="gui" value="true" />
+  <arg name="paused" value="true"/>
+  <arg name="use_sim_time" value="true"/>
+  <arg name="headless" value="false"/>
+</include>
+
+<!-- inicia spawner -->
+<include file="$(find test_gazebo)/launch/spawner.launch">
+</include>
+
+</launch>

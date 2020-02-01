@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <!-- Use empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find test_gazebo)/worlds/test.world"/>
+  </include>
+  
+  <!-- Spawn the baxter robot into Gazebo -->
+  <node name="spawn_baxter" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find baxter_description)/urdf/baxter.urdf -urdf -z 1 -x 1.5 -y -6 -Y 3.1416 -model baxter"/>
+    
+  <!-- Convert an xacro and put on parameter server -->
+  <param name="robot_description" 
+    command="$(find xacro)/xacro --inorder $(find pr2_description)/robots/pr2.urdf.xacro"/>
+
+  <!-- Spawn the pr2 robot into Gazebo -->
+  <node name="spawn_pr2" pkg="gazebo_ros" type="spawn_model" 
+    args="-param robot_description -urdf -y -6 -model pr2" />
+  
+</launch>

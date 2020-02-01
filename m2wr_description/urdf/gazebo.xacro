@@ -60,10 +60,14 @@
 </gazebo>
 
 <gazebo reference="link_chassis">
-  <material>Gazebo/Orange</material>
-</gazebo>
-<gazebo reference="caster_front_visual">
-  <material>Gazebo/Orange</material>
+  <visual name="caster_front_visual">
+    <material>
+      <script>
+        <uri>file://media/materials/scripts/gazebo.material</uri>
+        <name>Gazebo/Orange</name>
+      </script>
+    </material>
+  </visual>
 </gazebo>
 <gazebo reference="link_left_wheel">
   <material>Gazebo/Blue</material>

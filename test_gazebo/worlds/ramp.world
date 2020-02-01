@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://ramp</uri>
+      <name>ramp</name>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://m2wr</uri>
+      <name>m2w2</name>
+      <pose>0 0 2 0 0 0</pose>
+    </include>
+  </world>
+</sdf>
