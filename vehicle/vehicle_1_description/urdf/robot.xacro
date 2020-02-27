@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="vehicle" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find vehicle_1_description)/urdf/material.xacro"/>
+<xacro:include filename="$(find vehicle_1_description)/urdf/gazebo.xacro"/>
+
+<!-- Dummy -->
+<link name="dummy_link"/>
+
+<!-- Chassis -->
+<link name="base_link">
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="130"/>
+    <inertia ixx="15" ixy="0" ixz="0" iyy="52" iyz="0" izz="66"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="2.186 1.162 0.17"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="2.186 1.162 0.17"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="base_link">
+  <kp value="1000000"/>
+  <kd value="1"/>
+  <mu1 value="10"/>
+  <mu2 value="10"/>
+  <visual>
+    <material>
+      <xacro:gmaterial color="blue"/>
+    </material>
+  </visual>
+</gazebo>
+
+<joint name="dummy_joint" type="fixed">
+  <parent link="dummy_link"/>
+  <child link="base_link"/>
+</joint>
+
+</robot>

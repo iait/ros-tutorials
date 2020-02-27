@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find vehicle_2_description)/urdf/material.xacro"/>
+
+<!-- linkname     xposition  yposition  count -->
+<!-- front_left       0.621      0.543      1 -->
+<!-- front_right      0.621     -0.543      2 -->
+<!-- rear_left       -0.621      0.543      3 -->
+<!-- rear_right      -0.621     -0.543      4 -->
+<xacro:macro name="wheel" params="linkname xposition yposition count">
+
+<link name="${linkname}_wheel_link">
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="10"/>
+    <inertia ixx="0.2" ixy="0" ixz="0" iyy="0.35" iyz="0" izz="0.2"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+    <geometry>
+      <cylinder radius="0.272" length="0.076"/>
+    </geometry>
+    <material name="grey"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+    <geometry>
+      <cylinder radius="0.272" length="0.076"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="${linkname}_wheel_link">
+  <kp value="1000000"/>
+  <kd value="1"/>
+  <mu1 value="10"/>
+  <mu2 value="10"/>
+  <visual>
+    <material>
+      <xacro:gmaterial color="grey"/>
+    </material>
+  </visual>
+</gazebo>
+
+<joint name="${linkname}_wheel_joint" type="continuous">
+  <parent link="base_link"/>
+  <child link="${linkname}_wheel_link"/>
+  <origin xyz="${xposition} ${yposition} 0" rpy="0 0 0"/>
+  <axis xyz="0 1 0"/>
+</joint>
+
+<transmission name="tran${count}">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="${linkname}_wheel_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="motor${count}">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+</xacro:macro>
+</robot>

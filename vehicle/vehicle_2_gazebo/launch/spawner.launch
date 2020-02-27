@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+<arg name="urdf_robot_file" default=""/>
+
+<param name="robot_description" 
+  command="$(find xacro)/xacro --inorder $(arg urdf_robot_file)"/>
+
+<group ns="vehicle">
+
+  <arg name="robot_name" default="vehicle"/>
+
+  <rosparam file="$(find vehicle_2_gazebo)/config/control.yaml" command="load" ns="/vehicle"/>
+
+  <param name="/vehicle/robot_description" 
+    command="$(find xacro)/xacro --inorder $(arg urdf_robot_file)"/>
+
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+      args="-urdf -model $(arg robot_name) -z 0.272 -param /vehicle/robot_description"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+      respawn="false" output="screen">
+    <param name="publish_frequency" type="double" value="5.0"/>
+  </node>
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+      output="screen" args="--namespace=/vehicle 
+                            /vehicle/joint_state_controller
+                            /vehicle/front_left_wheel_joint_position_controller
+                            /vehicle/front_right_wheel_joint_position_controller
+                            /vehicle/rear_left_wheel_joint_position_controller
+                            /vehicle/rear_right_wheel_joint_position_controller">
+  </node>
+</group>
+
+</launch>
