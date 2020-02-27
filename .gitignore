@@ -6,3 +6,15 @@
 /gazebo_ros_demos/
 /gazebo_ros_pkgs/
 /baxter_common/
+/velodyne/
+/velodyne_tutorial/
+/ackermann_vehicle-1/
+/ackermansteer/
+/catvehicle/
+/cvchallenge_task1/
+/cvchallenge_task2/
+/obstaclestopper/
+/sicktoolbox/
+/sicktoolbox_wrapper/
+/steer_drive_ros/
+
